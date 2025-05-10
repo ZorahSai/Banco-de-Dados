@@ -1,0 +1,59 @@
+CREATE TABLE compra(
+	idCompra INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	valor REAL NOT NULL,
+	data DATETIME NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE produto(
+	idProduto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	nome TEXT NOT NULL,
+	valor REAL NOT NULL
+);
+
+CREATE TABLE item(
+	idItem INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	idCompra INT NOT NULL,
+	idProduto INT NOT NULL,
+	valorUnitário REAL NOT NULL,
+	quantidade INT NOT NULL,
+	FOREIGN KEY (idCompra) REFERENCES compra(idCompra),
+	FOREIGN KEY (idProduto) REFERENCES produto(idProduto)
+); 
+
+INSERT INTO compra VALUES(NULL, 50,'2020-02-24 12:40:20'); 
+
+INSERT INTO produto VALUES(NULL, 'Camarão', 5);
+
+INSERT INTO item VALUES(NULL, 1, 1, 5, 10);
+
+INSERT INTO compra VALUES(NULL, 700,'2020-02-24 12:40:20'); 
+
+INSERT INTO produto VALUES(NULL, 'Peixe', 35);
+
+INSERT INTO item VALUES(NULL, 2, 2, 35, 20);
+
+INSERT INTO compra VALUES(NULL, 1800,'1999-02-20  12:45:40');
+
+INSERT INTO produto VALUES(NULL, 'Ostra', 60);
+
+INSERT INTO item VALUES(NULL, 3, 3, 60, 30);
+
+INSERT INTO compra VALUES(NULL, 5000,'1990-08-24  17:55:20');
+
+INSERT INTO produto VALUES(NULL, 'Siri', 50);
+
+INSERT INTO item VALUES(NULL, 4, 4, 50, 100);
+
+INSERT INTO compra VALUES(NULL, 675,'2003-12-24  18:55:20');
+
+INSERT INTO produto VALUES(NULL, 'Lula', 15);
+
+INSERT INTO item VALUES(NULL, 5, 5, 15, 45);
+
+SELECT compra.idcompra AS  'Vendas',
+produto.nome AS 'Nome_Produto',
+produto.valor AS 'Preço'
+FROM compra
+INNER JOIN item ON(compra.idCompra = item.idCompra)
+INNER JOIN produto ON(produto.idProduto = item.idProduto)
+LIMIT 5;
