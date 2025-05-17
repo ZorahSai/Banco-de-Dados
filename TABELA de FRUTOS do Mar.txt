@@ -51,13 +51,14 @@ INSERT INTO produto VALUES(NULL, 'Lula', 15);
 INSERT INTO item VALUES(NULL, 5, 5, 15, 45);
 
 
-SELECT compra.idcompra AS  'Vendas',
-produto.nome AS 'Nome_Produto',
-produto.valor AS 'Preço'
-FROM compra
-INNER JOIN item ON(compra.idCompra = item.idCompra)
-INNER JOIN produto ON(produto.idProduto = item.idProduto)
-LIMIT 5;
+SELECT 
+    produto.nome AS 'Nome_Produto',
+    SUM(item.quantidade) AS 'Total_Quantidade_Vendida',
+    produto.valor AS 'Preço_Unitário'
+FROM item
+INNER JOIN produto ON produto.idProduto = item.idProduto
+GROUP BY produto.nome, produto.valor
+ORDER BY Total_Quantidade_Vendida DESC;
 
 SELECT idCompra, SUM(valorUnitário * quantidade)
 FROM item GROUP BY idcompra;
